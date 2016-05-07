@@ -38,7 +38,7 @@ pub fn scan_ports(ports: Vec<u16>) -> Vec<u16> {
 ///
 /// # Example
 /// ```no_run
-/// use port_scanner::scan_ports;
+/// use port_scanner::scan_ports_range;
 /// for open_port in scan_ports_range(8000..9000) {
 ///     println!("Port {} is open", open_port);
 /// }
