@@ -1,7 +1,7 @@
 use std::net::TcpListener;
 use std::ops::Range;
 
-/// Scan a port and return true if it's open
+/// Scan a port and return true if it's open.
 ///
 /// # Example
 /// ```no_run
@@ -9,13 +9,13 @@ use std::ops::Range;
 /// println!("Port 8000 open? {}", scan_port(8000));
 /// ```
 pub fn scan_port(port: u16) -> bool {
-    match TcpListener::bind(("127.0.0.1", port)) {
+    match TcpListener::bind(("0.0.0.0", port)) {
         Ok(_) => true,
         Err(_) => false,
     }
 }
 
-/// Scan specified ports and return a list of all open ports
+/// Scan specified ports and return a list of all open ports.
 ///
 /// # Example
 /// ```no_run
@@ -34,7 +34,7 @@ pub fn scan_ports(ports: Vec<u16>) -> Vec<u16> {
     open_ports
 }
 
-/// Scan a port range and return a list of all open ports
+/// Scan a port range and return a list of all open ports.
 ///
 /// # Example
 /// ```no_run
@@ -51,4 +51,23 @@ pub fn scan_ports_range(port_range: Range<u16>) -> Vec<u16> {
         }
     }
     open_ports
+}
+
+/// Request to the os the next open port.
+///
+/// # Example
+/// ```no_run
+/// use port_scanner::request_open_port;
+/// println!("Port {}", request_open_port().unwrap_or(0));
+/// ```
+pub fn request_open_port() -> Option<u16> {
+    match TcpListener::bind("0.0.0.0:0") {
+        Ok(a) => {
+            match a.local_addr() {
+                Ok(a) => Some(a.port()),
+                Err(_) => None,
+            }
+        }
+        Err(_) => None
+    }
 }
