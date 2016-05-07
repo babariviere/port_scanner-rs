@@ -2,22 +2,22 @@
 
 There is 4 functions provided
 
-# scan_port
+## scan_port
 
 It is used to scan a single port and see if it's open.
 
-## Example
+### Example
 
 ```rust
 use port_scanner::scan_port;
 println!("Port 8000 open? {}", scan_port(8000));
 ```
 
-# scan_ports
+## scan_ports
 
 This function scan all ports specified and return all open ports.
 
-## Example
+### Example
 
 ```rust
 use port_scanner::scan_ports;
@@ -26,11 +26,11 @@ for open_port in scan_ports(vec![8000, 9000, 8888]) {
 }
 ```
 
-# scan_ports_range
+## scan_ports_range
 
 This function is like scan_ports but it scan a range of ports.
 
-## Example
+### Example
 
 ```rust
 use port_scanner::scan_ports_range;
@@ -39,11 +39,11 @@ for open_port in scan_ports_range(8000..9000) {
 }
 ```
 
-# request_open_port
+## request_open_port
 
 This function ask to the os and open port and return it.
 
-## Example
+### Example
 
 ```rust
 use port_scanner::request_open_port;
