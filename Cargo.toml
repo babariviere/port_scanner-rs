@@ -1,10 +1,11 @@
 [package]
 name = "port_scanner"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["notkild <notkild@gmail.com>"]
 description = "A simple port scanner"
 license = "Apache-2.0"
 readme = "README.md"
 keywords = ["port", "scanner"]
+repository = "https://github.com/notkild/port_scanner-rs"
 
 [dependencies]
