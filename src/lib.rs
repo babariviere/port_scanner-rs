@@ -1,4 +1,4 @@
-use std::net::TcpListener;
+use std::net::{SocketAddr, TcpListener, ToSocketAddrs};
 use std::ops::Range;
 
 /// Scan a port and return true if it's open.
@@ -10,6 +10,20 @@ use std::ops::Range;
 /// ```
 pub fn scan_port(port: u16) -> bool {
     match TcpListener::bind(("0.0.0.0", port)) {
+        Ok(_) => true,
+        Err(_) => false,
+    }
+}
+
+/// Scan port of an address and return true if it's open.
+///
+/// # Example
+/// ```no_run
+/// use port_scanner::scan_port_addr;
+/// println!("IP 192.168.1.1 has port 8000 open? {}", scan_port_addr("192.168.1.1:8000"));
+/// ```
+pub fn scan_port_addr<A: ToSocketAddrs>(addr: A) -> bool {
+    match TcpListener::bind(addr) {
         Ok(_) => true,
         Err(_) => false,
     }
@@ -32,6 +46,26 @@ pub fn scan_ports(ports: Vec<u16>) -> Vec<u16> {
         }
     }
     open_ports
+}
+
+/// Scan specified ports of addresses and return a list of all addresses with open ports.
+///
+/// # Example
+/// ```no_run
+/// use port_scanner::scan_ports_addrs;
+/// for open_addr in scan_ports_addrs(vec!["192.168.1.1:8000", "192.168.1.2:8000"]) {
+///     println!("IP {} has port {} open.", open_addr.ip(), open_addr.port());
+/// }
+/// ```
+pub fn scan_ports_addrs<A: ToSocketAddrs>(addrs: Vec<A>) -> Vec<SocketAddr> {
+    let mut open_addrs = Vec::new();
+    for addr in addrs {
+        if scan_port_addr(&addr) {
+            let addr = addr.to_socket_addrs().unwrap().next().unwrap();
+            open_addrs.push(addr);
+        }
+    }
+    open_addrs
 }
 
 /// Scan a port range and return a list of all open ports.
@@ -68,6 +102,6 @@ pub fn request_open_port() -> Option<u16> {
                 Err(_) => None,
             }
         }
-        Err(_) => None
+        Err(_) => None,
     }
 }
