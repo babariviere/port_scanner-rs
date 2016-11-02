@@ -21,7 +21,7 @@ It is used to scan a single port with a specific ip and see if it's open like th
 
 ```rust
 use port_scanner::scan_port_addr;
-println!("IP 192.168.1.1 has port 8000 open? {}", scan_port_addr("192.168.1.1:8000");
+println!("IP 192.168.1.1 has port 8000 open? {}", scan_port_addr("192.168.1.1:8000"));
 ```
 
 ## scan_ports
