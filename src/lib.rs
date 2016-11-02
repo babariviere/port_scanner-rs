@@ -1,4 +1,4 @@
-use std::net::{SocketAddr, TcpListener, ToSocketAddrs};
+use std::net::{SocketAddr, TcpListener, TcpStream, ToSocketAddrs};
 use std::ops::Range;
 
 /// Scan a port and return true if it's open.
@@ -9,7 +9,7 @@ use std::ops::Range;
 /// println!("Port 8000 open? {}", scan_port(8000));
 /// ```
 pub fn scan_port(port: u16) -> bool {
-    match TcpListener::bind(("0.0.0.0", port)) {
+    match TcpStream::connect(("0.0.0.0", port)) {
         Ok(_) => true,
         Err(_) => false,
     }
@@ -23,7 +23,7 @@ pub fn scan_port(port: u16) -> bool {
 /// println!("IP 192.168.1.1 has port 8000 open? {}", scan_port_addr("192.168.1.1:8000"));
 /// ```
 pub fn scan_port_addr<A: ToSocketAddrs>(addr: A) -> bool {
-    match TcpListener::bind(addr) {
+    match TcpStream::connect(addr) {
         Ok(_) => true,
         Err(_) => false,
     }
