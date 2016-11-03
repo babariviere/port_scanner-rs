@@ -105,3 +105,55 @@ pub fn request_open_port() -> Option<u16> {
         Err(_) => None,
     }
 }
+
+/// Check if the local port is available.
+///
+/// # Example
+/// ```no_run
+/// use port_scanner::local_port_available;
+/// println!("Is port 80 available to use? {}", local_port_available(80));
+/// ```
+pub fn local_port_available(port: u16) -> bool {
+    match TcpListener::bind(("127.0.0.1", port)) {
+        Ok(_) => true,
+        Err(_) => false,
+    }
+}
+
+/// Check if the local ports are available.
+///
+/// # Example
+/// ```no_run
+/// use port_scanner::local_ports_available;
+/// for available in local_ports_available(vec![80, 81]) {
+///     println!("Port {} is available to use", available);
+/// }
+/// ```
+pub fn local_ports_available(ports: Vec<u16>) -> Vec<u16> {
+    let mut available = Vec::new();
+    for port in ports {
+        if local_port_available(port) {
+            available.push(port);
+        }
+    }
+    available
+}
+
+/// Check if the local ports are available.
+///
+/// # Example
+/// ```no_run
+/// use port_scanner::local_ports_available_range;
+/// for available in local_ports_available_range(1..80) {
+///     println!("Port {} is available to use", available);
+/// }
+/// ```
+pub fn local_ports_available_range(port_range: Range<u16>) -> Vec<u16> {
+    let mut available = Vec::new();
+    for port in port_range {
+        if local_port_available(port) {
+            available.push(port);
+        }
+    }
+    available
+}
