@@ -1,6 +1,6 @@
 [package]
 name = "port_scanner"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["notkild <notkild@gmail.com>"]
 description = "A simple port scanner"
 license = "Apache-2.0"
