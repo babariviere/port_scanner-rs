@@ -2,6 +2,8 @@
 
 This is a simple library to scan open port and to scan available port on localhost.
 
+[Documentation](https://docs.rs/port_scanner)
+
 ## Features
 
 - Scan port with a different ip.
